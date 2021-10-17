@@ -6,25 +6,16 @@ namespace DatabaseFixture.DatabaseSource
 {
     public class SqlFile
     {
-        public FileInfo File { get; }
-        private readonly FileIsAppliedInDatabaseChecker _checker;
+        private readonly FileInfo _file;
 
-        public SqlFile(FileInfo file, FileIsAppliedInDatabaseChecker checker)
+        public SqlFile(FileInfo file)
         {
-            File = Guard.Against.Null(file, nameof(file));
-            _checker = Guard.Against.Null(checker, nameof(checker));
+            _file = Guard.Against.FileExists(file, nameof(file));
         }
 
-        public SqlFileContent GetContent()
+        public void Apply(SqlContentApplier applier)
         {
-            using var streamReader = File.OpenText();
-            var content = streamReader.ReadToEnd();
-            return new SqlFileContent(content);
-        }
-
-        public bool CheckIfAppliedInDatabase()
-        {
-            return _checker.CheckIfFileIsAlreadyApplied(this);
+            SqlFileContent.FromFile(_file).Apply(applier);
         }
     }
 }

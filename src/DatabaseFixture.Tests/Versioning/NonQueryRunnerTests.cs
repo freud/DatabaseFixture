@@ -12,7 +12,7 @@ namespace DatabaseFixture.Tests.Versioning
         [Fact]
         public void executed__DatabaseVersion_table_does_not_exist__creates_the_table()
         {
-            _runner.Execute(new NewDatabaseVersionSqlContent());
+            _runner.Execute(new NewDatabaseVersionTableSqlContent());
 
             _connection
                 .QuerySingle<int>("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'DatabaseVersion'")
@@ -23,11 +23,11 @@ namespace DatabaseFixture.Tests.Versioning
         public void executed__DatabaseVersion_table_exists__does_nothing()
         {
             // arrange
-            _runner.Execute(new NewDatabaseVersionSqlContent());
+            _runner.Execute(new NewDatabaseVersionTableSqlContent());
             _connection.Execute("INSERT INTO [dbo].[DatabaseVersion]([Version], [AppliedAt], [AppliedSqlContent]) VALUES ('1.0.0', '2021-05-01 12:00', 'GO')");
 
             // act
-            _runner.Execute(new NewDatabaseVersionSqlContent());
+            _runner.Execute(new NewDatabaseVersionTableSqlContent());
 
             // assert
             _connection

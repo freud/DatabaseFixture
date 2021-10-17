@@ -7,13 +7,11 @@ namespace DatabaseFixture.DatabaseSource
 {
     public class SqlFilesDirectory
     {
-        private readonly FileIsAppliedInDatabaseChecker _checker;
         private readonly string _path;
 
-        public SqlFilesDirectory(string path, FileIsAppliedInDatabaseChecker checker)
+        public SqlFilesDirectory(string path)
         {
-            _path = Guard.Against.NullOrWhiteSpace(path, nameof(path));
-            _checker = Guard.Against.Null(checker, nameof(checker));
+            _path = Guard.Against.DirectoryExists(path, nameof(path));
         }
 
         public IEnumerable<SqlFile> GetAll()
@@ -21,7 +19,7 @@ namespace DatabaseFixture.DatabaseSource
             return Directory
                 .GetFiles(_path, "*.sql", SearchOption.TopDirectoryOnly)
                 .Select(file => new FileInfo(file))
-                .Select(file => new SqlFile(file, _checker));
+                .Select(file => new SqlFile(file));
         }
     }
 }
