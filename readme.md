@@ -17,7 +17,7 @@ No ORM libraries and complex behavior.
    - [ ] By default without auto-creation
    - [ ] The option to set the auto-creation flag.
 3. [ ] Apply only SQL files that are not applied already.
-   - [ ] SQL files executer, that works with every SQL content (see [SMO](https://stackoverflow.com/a/40830/14163658)).
+   - [x] SQL files executer, that works with every SQL content (see [SMO](https://stackoverflow.com/a/40830/14163658)).
 4. [ ] Snapshots: detected by the SQL files pattern *-snapshot.sql.
 5. [ ] DatabaseFixture.Testing extension to re-create the whole database from scratch.
 6. [ ] Different adtabase providers:
