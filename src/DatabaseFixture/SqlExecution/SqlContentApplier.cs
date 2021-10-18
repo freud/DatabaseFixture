@@ -24,6 +24,12 @@ namespace DatabaseFixture.SqlExecution
 
         public void Apply(SqlContent content)
         {
+            if (content is PredefinedSqlContent)
+            {
+                _runner.Execute(content);
+                return;
+            }
+
             if (_checker.CheckIfAlreadyApplied(content))
             {
                 return;
