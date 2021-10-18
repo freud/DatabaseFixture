@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Ardalis.GuardClauses;
 using DatabaseFixture.Versioning.Factories;
@@ -17,12 +16,13 @@ namespace DatabaseFixture.DatabaseSource
             _versionFactory = Guard.Against.Null(versionFactory, nameof(versionFactory));
         }
 
-        public IEnumerable<SqlFileContent> GetAll()
+        public IOrderedEnumerable<SqlFileContent> GetAll()
         {
             return Directory
                 .GetFiles(_path, "*.sql", SearchOption.TopDirectoryOnly)
                 .Select(file => new FileInfo(file))
-                .Select(file => SqlFileContent.FromFile(file, fileInfo => _versionFactory.Create(fileInfo)));
+                .Select(file => SqlFileContent.FromFile(file, fileInfo => _versionFactory.Create(fileInfo)))
+                .OrderByDescending(file => file.Version);
         }
     }
 }
