@@ -3,9 +3,9 @@ using Ardalis.GuardClauses;
 using DatabaseFixture.DatabaseSource;
 using DatabaseFixture.SqlExecution;
 using DatabaseFixture.SqlExecution.PredefinedSql;
+using DatabaseFixture.SqlExtensions;
 using DatabaseFixture.Versioning;
 using DatabaseFixture.Versioning.Factories;
-using Microsoft.Data.SqlClient;
 
 namespace DatabaseFixture
 {
@@ -27,15 +27,14 @@ namespace DatabaseFixture
 
         public void Execute()
         {
-            using (var connection = new SqlConnection(_connectionString))
+            _connectionString.Execute(connection =>
             {
-                connection.Open();
                 var sqlToApply = new List<SqlContent>();
                 sqlToApply.Add(CreateDatabaseIfNotExistsSqlContent.Create(connection.Database));
                 sqlToApply.Add(CreateDatabaseVersionTableSqlContent.Create());
                 sqlToApply.AddRange(_directory.GetAll());
                 sqlToApply.ForEach(sql => sql.Apply(_applier));
-            }
+            });
         }
 
         public static DatabaseFixture Create(string sqlFilesDirectory, string connectionString)

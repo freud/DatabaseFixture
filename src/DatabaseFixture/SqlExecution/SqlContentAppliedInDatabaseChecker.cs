@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Ardalis.GuardClauses;
 using Dapper;
-using Microsoft.Data.SqlClient;
+using DatabaseFixture.SqlExtensions;
 
 namespace DatabaseFixture.SqlExecution
 {
@@ -17,10 +17,8 @@ namespace DatabaseFixture.SqlExecution
 
         public bool CheckIfAlreadyApplied(SqlContent content)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            return _connectionString.Execute(connection =>
             {
-                connection.Open();
-
                 var results = connection.Query(
                     @"SELECT * FROM [dbo].[DatabaseVersion] WHERE [AppliedSqlContent] = @AppliedSqlContent",
                     new { AppliedSqlContent = content.RawSql }
@@ -32,7 +30,7 @@ namespace DatabaseFixture.SqlExecution
                 }
 
                 return results.Count == 1;
-            }
+            });
         }
     }
 }

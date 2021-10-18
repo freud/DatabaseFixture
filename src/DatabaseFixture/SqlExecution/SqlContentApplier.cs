@@ -1,6 +1,7 @@
 ﻿using System;
 using Dapper;
 using Ardalis.GuardClauses;
+using DatabaseFixture.SqlExtensions;
 using Microsoft.Data.SqlClient;
 
 namespace DatabaseFixture.SqlExecution
@@ -23,11 +24,7 @@ namespace DatabaseFixture.SqlExecution
 
         public void Apply(SqlContent content)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                ApplyContent(connection, content);
-            }
+            _connectionString.Execute(connection => ApplyContent(connection, content));
         }
         
         private void ApplyContent(SqlConnection connection, SqlContent content)

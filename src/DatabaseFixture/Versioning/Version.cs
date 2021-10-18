@@ -24,7 +24,7 @@ namespace DatabaseFixture.Versioning
 
         public override int GetHashCode()
         {
-            throw new NotImplementedException();
+            return DisplayName.GetHashCode();
         }
 
         public override string ToString()
