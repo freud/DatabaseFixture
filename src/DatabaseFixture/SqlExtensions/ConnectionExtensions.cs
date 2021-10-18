@@ -14,6 +14,20 @@ namespace DatabaseFixture.SqlExtensions
             }
         }
 
+        public static void ExecuteWithDatabase(this string connectionString, string databaseName, Action<SqlConnection> action)
+        {
+            var connectionStringBuilder = new SqlConnectionStringBuilder(connectionString)
+            {
+                InitialCatalog = databaseName
+            };
+
+            using (var connection = new SqlConnection(connectionStringBuilder.ToString()))
+            {
+                connection.Open();
+                action(connection);
+            }
+        }
+
         public static T Execute<T>(this string connectionString, Func<SqlConnection, T> action)
         {
             using (var connection = new SqlConnection(connectionString))

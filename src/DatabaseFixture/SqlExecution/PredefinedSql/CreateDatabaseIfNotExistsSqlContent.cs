@@ -1,10 +1,8 @@
 ﻿namespace DatabaseFixture.SqlExecution.PredefinedSql
 {
-    public class CreateDatabaseIfNotExistsSqlContent : DatabaseSwitchSqlContent
+    public class CreateDatabaseIfNotExistsSqlContent : SqlContentWithoutDatabase
     {
         public CreateDatabaseIfNotExistsSqlContent(string databaseName) : base(
-            "master",
-            databaseName,
             @$"
                 IF NOT EXISTS(
 	                SELECT * FROM [sys].[databases]

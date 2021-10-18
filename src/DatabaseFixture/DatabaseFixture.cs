@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Ardalis.GuardClauses;
 using DatabaseFixture.DatabaseSource;
 using DatabaseFixture.SqlExecution;
@@ -6,6 +7,7 @@ using DatabaseFixture.SqlExecution.PredefinedSql;
 using DatabaseFixture.SqlExtensions;
 using DatabaseFixture.Versioning;
 using DatabaseFixture.Versioning.Factories;
+using Microsoft.Data.SqlClient;
 
 namespace DatabaseFixture
 {
@@ -13,7 +15,7 @@ namespace DatabaseFixture
     {
         private readonly SqlFilesDirectory _directory;
         private readonly SqlContentApplier _applier;
-        private readonly string _connectionString;
+        private readonly SqlConnectionStringBuilder _builder;
 
         public DatabaseFixture(
             SqlFilesDirectory directory, 
@@ -22,19 +24,17 @@ namespace DatabaseFixture
         {
             _directory = Guard.Against.Null(directory, nameof(directory));
             _applier = Guard.Against.Null(applier, nameof(applier));
-            _connectionString = Guard.Against.NullOrWhiteSpace(connectionString, nameof(connectionString));
+            _builder = new SqlConnectionStringBuilder(connectionString);
         }
 
         public void Execute()
         {
-            _connectionString.Execute(connection =>
+            CreateDatabaseIfNotExistsSqlContent.Create(_builder.InitialCatalog).Apply(_applier);
+            CreateDatabaseVersionTableSqlContent.Create().Apply(_applier);
+            foreach (var content in _directory.GetAll())
             {
-                var sqlToApply = new List<SqlContent>();
-                sqlToApply.Add(CreateDatabaseIfNotExistsSqlContent.Create(connection.Database));
-                sqlToApply.Add(CreateDatabaseVersionTableSqlContent.Create());
-                sqlToApply.AddRange(_directory.GetAll());
-                sqlToApply.ForEach(sql => sql.Apply(_applier));
-            });
+                content.Apply(_applier);
+            }
         }
 
         public static DatabaseFixture Create(string sqlFilesDirectory, string connectionString)

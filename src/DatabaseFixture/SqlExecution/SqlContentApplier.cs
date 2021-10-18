@@ -2,7 +2,6 @@
 using Dapper;
 using Ardalis.GuardClauses;
 using DatabaseFixture.SqlExtensions;
-using Microsoft.Data.SqlClient;
 
 namespace DatabaseFixture.SqlExecution
 {
@@ -24,11 +23,6 @@ namespace DatabaseFixture.SqlExecution
 
         public void Apply(SqlContent content)
         {
-            _connectionString.Execute(connection => ApplyContent(connection, content));
-        }
-        
-        private void ApplyContent(SqlConnection connection, SqlContent content)
-        {
             if (content is PredefinedSqlContent)
             {
                 _runner.Execute(content);
@@ -44,7 +38,7 @@ namespace DatabaseFixture.SqlExecution
 
             if (content is VersionedSqlContent versionedSqlContent)
             {
-                connection.Execute(
+                _connectionString.Execute(connection => connection.Execute(
                     $"INSERT INTO [dbo].[DatabaseVersion]([Version], [AppliedAt], [AppliedSqlContent]) " +
                     $"VALUES(@Version, @UtcNow, @RawSql)",
                     new
@@ -52,7 +46,7 @@ namespace DatabaseFixture.SqlExecution
                         Version = versionedSqlContent.Version.ToString(),
                         RawSql = content.ToString(),
                         UtcNow = DateTime.UtcNow
-                    }
+                    })
                 );
             }
         }

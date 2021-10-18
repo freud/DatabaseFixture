@@ -1,8 +1,8 @@
 namespace DatabaseFixture.SqlExecution.PredefinedSql
 {
-    public abstract class DatabaseSwitchSqlContent : PredefinedSqlContent
+    public abstract class SqlContentWithoutDatabase : PredefinedSqlContent
     {
-        protected DatabaseSwitchSqlContent(string databaseToApplyOn, string databaseToSwitchAfter, string rawSql) : base(rawSql)
+        protected SqlContentWithoutDatabase(string rawSql) : base(rawSql)
         {
         }
     }
