@@ -31,7 +31,7 @@ namespace DatabaseFixture
                 .Create(_connectionStringBuilder.InitialCatalog)
                 .Apply(_applier);
 
-            NewDatabaseVersionTableSqlContent
+            CreateDatabaseVersionTableSqlContent
                 .Create()
                 .Apply(_applier);
 
