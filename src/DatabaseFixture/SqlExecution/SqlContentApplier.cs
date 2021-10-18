@@ -33,7 +33,13 @@ namespace DatabaseFixture.SqlExecution
 
             _connection.Execute(
                 $"INSERT INTO [dbo].[DatabaseVersion]([Version], [AppliedAt], [AppliedSqlContent]) " +
-                $"VALUES('anything-for-now', '{DateTime.UtcNow}', '{content.RawSql}')"
+                $"VALUES(@Version, @UtcNow, @RawSql)",
+                new
+                {
+                    Version = content.Version.ToString(),
+                    RawSql = content.ToString(),
+                    UtcNow = DateTime.UtcNow
+                }
             );
         }
     }

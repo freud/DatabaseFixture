@@ -15,7 +15,9 @@ namespace DatabaseFixture.DatabaseSource
 
         public void Apply(SqlContentApplier applier)
         {
-            SqlFileContent.FromFile(_file).Apply(applier);
+            SqlFileContent
+                .FromFile(_file, fileInfo => new SemVersionFromFileFactory(fileInfo).Create())
+                .Apply(applier);
         }
     }
 }

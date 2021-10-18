@@ -2,7 +2,7 @@ using DatabaseFixture.SqlExecution;
 
 namespace DatabaseFixture.Versioning
 {
-    public class CreateDatabaseVersionTableSqlContent : SqlContent
+    public class CreateDatabaseVersionTableSqlContent : PredefinedSqlContent
     {
         private const string CreateDatabaseVersionTableSql = @"
             IF OBJECT_ID('[dbo].[DatabaseVersion]', 'U') IS NULL

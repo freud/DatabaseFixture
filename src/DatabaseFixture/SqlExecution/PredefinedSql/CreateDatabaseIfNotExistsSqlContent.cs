@@ -1,6 +1,6 @@
 ﻿namespace DatabaseFixture.SqlExecution.PredefinedSql
 {
-    public class CreateDatabaseIfNotExistsSqlContent : SqlContent
+    public class CreateDatabaseIfNotExistsSqlContent : PredefinedSqlContent
     {
         public CreateDatabaseIfNotExistsSqlContent(string databaseName) : base(
             @$"

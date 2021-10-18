@@ -14,7 +14,7 @@ namespace DatabaseFixture.Tests
             Should.NotThrow(() => sut.Execute(new TestSqlContent()));
         }
 
-        private class TestSqlContent : SqlContent
+        private class TestSqlContent : PredefinedSqlContent
         {
             protected internal TestSqlContent() : base(@"
                 DROP DATABASE IF EXISTS [DatabaseFixture]
