@@ -9,10 +9,23 @@
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
       <PackageReference Include="Shouldly" Version="4.0.3" />
       <PackageReference Include="xunit" Version="2.4.1" />
+      <PackageReference Include="Xunit.Repeat" Version="1.1.26" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\DatabaseFixture\DatabaseFixture.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="ExampleSqlFiles\1.0.0-test1.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="ExampleSqlFiles\1.0.1-test2.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="ExampleSqlFiles\1.1.0-test3.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
