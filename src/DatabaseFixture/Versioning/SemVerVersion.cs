@@ -20,14 +20,13 @@ namespace DatabaseFixture.Versioning
         {
             Guard.Against.Null(obj, nameof(obj));
 
-            if (obj.Major < Major || obj.Minor < Minor || obj.Patch < Patch)
-            {
-                return -1;
-            }
-            if (obj.Major > Major || obj.Minor > Minor || obj.Patch > Patch)
-            {
-                return 1;
-            }
+            if (obj.Major < Major) return -1;
+            if (obj.Major > Major) return 1;
+            if (obj.Minor < Minor) return -1;
+            if (obj.Minor > Minor) return 1;
+            if (obj.Patch < Patch) return -1;
+            if (obj.Patch > Patch) return 1;
+
             return 0;
         }
     }
