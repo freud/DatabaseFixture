@@ -7,12 +7,12 @@ No ORM libraries and complex behavior.
 ## ToDo
 
 1. [ ] Database versioning
-   - [ ] DatabaseVersion table (auto-creation if not exists).
-   - [ ] Default versoning strategy: semantic (MAJOR.MINOR.PATCH) kept in sql file names prefix.
+   - [x] DatabaseVersion table (auto-creation if not exists).
+   - [x] Default versoning strategy: semantic (MAJOR.MINOR.PATCH) kept in sql file names prefix.
    - [ ] Custom versioning providers.
-   - [ ] The guard for files, that don't contain the correct version pattern.
+   - [x] The guard for files, that don't contain the correct version pattern.
    - [ ] The guard for files, that are not applied and contain versions older than the latest one. Detect any SQL files added accidentally.
-   - [ ] Order SQL files by the version.
+   - [x] Order SQL files by the version.
 2. [ ] Create a database automatically:
    - [ ] By default without auto-creation
    - [ ] The option to set the auto-creation flag.
@@ -23,7 +23,7 @@ No ORM libraries and complex behavior.
    - [ ] support backup & restore binary snapshots.
 5. [ ] DatabaseFixture.Testing extension to re-create the whole database from scratch.
 6. [ ] Different adtabase providers:
-   - [ ] Microsoft SQL Server
+   - [x] Microsoft SQL Server
    - [ ] MySQL
    - [ ] PostgreSQL
 7. [ ] Automation testing with Docker
