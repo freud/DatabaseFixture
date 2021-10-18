@@ -13,6 +13,7 @@ namespace DatabaseFixture
         private readonly SqlFilesDirectory _directory;
         private readonly SqlContentApplier _applier;
         private readonly SqlConnection _connection;
+        private readonly string _defaultDatabaseName;
 
         public DatabaseFixture(
             SqlFilesDirectory directory, 
@@ -22,13 +23,24 @@ namespace DatabaseFixture
             _directory = Guard.Against.Null(directory, nameof(directory));
             _applier = Guard.Against.Null(applier, nameof(applier));
             _connection = Guard.Against.Null(connection, nameof(connection));
+            _defaultDatabaseName = "master";
         }
 
         public void Execute()
         {
+            var destinationDatabase = _connection.Database;
+            var builder = new SqlConnectionStringBuilder(_connection.ConnectionString)
+            {
+                InitialCatalog = _defaultDatabaseName
+            };
+            _connection.ConnectionString = builder.ToString();
+            _connection.Open();
+
             CreateDatabaseIfNotExistsSqlContent
-                .Create(_connection.Database)
+                .Create(destinationDatabase)
                 .Apply(_applier);
+
+            _connection.ChangeDatabase(destinationDatabase);
 
             CreateDatabaseVersionTableSqlContent
                 .Create()
