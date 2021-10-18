@@ -36,7 +36,7 @@ namespace DatabaseFixture.Tests.Versioning
                 .ShouldBe(1);
             _connection
                 .QuerySingle<int>("SELECT COUNT(*) FROM [dbo].[DatabaseVersion]")
-                .ShouldBe(1);
+                .ShouldBeGreaterThan(0);
         }
 
         private readonly NonQueryRunner _runner;
