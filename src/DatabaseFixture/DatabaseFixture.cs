@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using DatabaseFixture.DatabaseSource;
 using DatabaseFixture.SqlExecution;
 using DatabaseFixture.SqlExecution.PredefinedSql;
-using DatabaseFixture.SqlExtensions;
 using DatabaseFixture.Versioning;
 using DatabaseFixture.Versioning.Factories;
 using Microsoft.Data.SqlClient;
@@ -42,7 +39,7 @@ namespace DatabaseFixture
             var versionFactory = new SemVersionFromFileFromFileFactory();
             var directory = new SqlFilesDirectory(sqlFilesDirectory, versionFactory);
             var applier = new SqlContentApplier(new NonQueryRunner(connectionString), connectionString, new SqlContentAppliedInDatabaseChecker(connectionString));
-            return new(directory, applier, connectionString);
+            return new DatabaseFixture(directory, applier, connectionString);
         }
     }
 }
