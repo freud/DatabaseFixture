@@ -16,9 +16,12 @@ namespace DatabaseFixture.SqlExecution
 
         public void Execute(SqlContent content)
         {
-            using var connection = new SqlConnection(_sqlConnectionString);
-            var server = new Server(new ServerConnection(connection));
-            server.ConnectionContext.ExecuteNonQuery(content.RawSql);
+            using (var connection = new SqlConnection(_sqlConnectionString))
+            {
+                connection.Open();
+                var server = new Server(new ServerConnection(connection));
+                server.ConnectionContext.ExecuteNonQuery(content.RawSql);   
+            }
         }
     }
 }

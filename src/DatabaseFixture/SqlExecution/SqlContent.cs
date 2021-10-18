@@ -15,5 +15,12 @@ namespace DatabaseFixture.SqlExecution
         {
             applier.Apply(this);
         }
+
+        public override string ToString() => RawSql;
+
+        public static implicit operator string(SqlContent content)
+        {
+            return content.RawSql;
+        }
     }
 }
