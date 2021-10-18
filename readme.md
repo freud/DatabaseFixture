@@ -34,3 +34,4 @@ No ORM libraries and complex behavior.
     - [ ] Nuke.Build
     - [ ] xUnit, NUnit, and more fixtures
     - [ ] Testing: create database once, and the backup and restore it before every unit test
+    - [ ] Testing: simultaneous integration tests by different databases auto-creation
