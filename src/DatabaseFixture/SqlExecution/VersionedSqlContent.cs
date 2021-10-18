@@ -11,10 +11,5 @@ namespace DatabaseFixture.SqlExecution
         {
             Version = Guard.Against.Null(version, nameof(version));
         }
-        
-        public void Apply(SqlContentApplier applier)
-        {
-            applier.Apply(this);
-        }
     }
 }

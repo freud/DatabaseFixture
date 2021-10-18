@@ -22,13 +22,14 @@ namespace DatabaseFixture.SqlExecution
             _checker = Guard.Against.Null(checker, nameof(checker));
         }
 
-        public void Apply(PredefinedSqlContent content)
+        public void Apply(SqlContent content)
         {
-            _runner.Execute(content);
-        }
-        
-        public void Apply(VersionedSqlContent content)
-        {
+            if (content is PredefinedSqlContent)
+            {
+                _runner.Execute(content);
+                return;
+            }
+
             if (_checker.CheckIfAlreadyApplied(content))
             {
                 return;
@@ -36,16 +37,19 @@ namespace DatabaseFixture.SqlExecution
 
             _runner.Execute(content);
 
-            _connection.Execute(
-                $"INSERT INTO [dbo].[DatabaseVersion]([Version], [AppliedAt], [AppliedSqlContent]) " +
-                $"VALUES(@Version, @UtcNow, @RawSql)",
-                new
-                {
-                    Version = content.Version.ToString(),
-                    RawSql = content.ToString(),
-                    UtcNow = DateTime.UtcNow
-                }
-            );
+            if (content is VersionedSqlContent versionedSqlContent)
+            {
+                _connection.Execute(
+                    $"INSERT INTO [dbo].[DatabaseVersion]([Version], [AppliedAt], [AppliedSqlContent]) " +
+                    $"VALUES(@Version, @UtcNow, @RawSql)",
+                    new
+                    {
+                        Version = versionedSqlContent.Version.ToString(),
+                        RawSql = content.ToString(),
+                        UtcNow = DateTime.UtcNow
+                    }
+                );
+            }
         }
     }
 }

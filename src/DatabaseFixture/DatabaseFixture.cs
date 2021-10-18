@@ -1,4 +1,5 @@
-﻿using Ardalis.GuardClauses;
+﻿using System.Collections.Generic;
+using Ardalis.GuardClauses;
 using DatabaseFixture.DatabaseSource;
 using DatabaseFixture.SqlExecution;
 using DatabaseFixture.SqlExecution.PredefinedSql;
@@ -13,7 +14,6 @@ namespace DatabaseFixture
         private readonly SqlFilesDirectory _directory;
         private readonly SqlContentApplier _applier;
         private readonly SqlConnection _connection;
-        private readonly string _defaultDatabaseName;
 
         public DatabaseFixture(
             SqlFilesDirectory directory, 
@@ -23,33 +23,15 @@ namespace DatabaseFixture
             _directory = Guard.Against.Null(directory, nameof(directory));
             _applier = Guard.Against.Null(applier, nameof(applier));
             _connection = Guard.Against.Null(connection, nameof(connection));
-            _defaultDatabaseName = "master";
         }
 
         public void Execute()
         {
-            var destinationDatabase = _connection.Database;
-            var builder = new SqlConnectionStringBuilder(_connection.ConnectionString)
-            {
-                InitialCatalog = _defaultDatabaseName
-            };
-            _connection.ConnectionString = builder.ToString();
-            _connection.Open();
-
-            CreateDatabaseIfNotExistsSqlContent
-                .Create(destinationDatabase)
-                .Apply(_applier);
-
-            _connection.ChangeDatabase(destinationDatabase);
-
-            CreateDatabaseVersionTableSqlContent
-                .Create()
-                .Apply(_applier);
-
-            foreach (var sqlFileContent in _directory.GetAll())
-            {
-                sqlFileContent.Apply(_applier);
-            }
+            var sqlToApply = new List<SqlContent>();
+            sqlToApply.Add(CreateDatabaseIfNotExistsSqlContent.Create(_connection.Database));
+            sqlToApply.Add(CreateDatabaseVersionTableSqlContent.Create());
+            sqlToApply.AddRange(_directory.GetAll());
+            sqlToApply.ForEach(sql => sql.Apply(_applier));
         }
 
         public static DatabaseFixture Create(string sqlFilesDirectory, string connectionString)

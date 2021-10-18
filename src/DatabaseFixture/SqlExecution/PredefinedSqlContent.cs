@@ -5,10 +5,5 @@ namespace DatabaseFixture.SqlExecution
         protected PredefinedSqlContent(string rawSql) : base(rawSql)
         {
         }
-        
-        public void Apply(SqlContentApplier applier)
-        {
-            applier.Apply(this);
-        }
     }
 }

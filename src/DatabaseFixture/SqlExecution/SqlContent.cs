@@ -17,5 +17,10 @@ namespace DatabaseFixture.SqlExecution
         {
             return content.RawSql;
         }
+
+        public void Apply(SqlContentApplier applier)
+        {
+            applier.Apply(this);
+        }
     }
 }
