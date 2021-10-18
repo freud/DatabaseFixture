@@ -16,21 +16,22 @@ No ORM libraries and complex behavior.
 2. [ ] Create a database automatically:
    - [ ] By default without auto-creation
    - [ ] The option to set the auto-creation flag.
-3. [ ] Apply only SQL files that are not applied already.
+3. [x] Apply only SQL files that are not applied already.
    - [x] SQL files executer, that works with every SQL content (see [SMO](https://stackoverflow.com/a/40830/14163658)).
-4. [ ] Snapshots:
+4. [ ] Better errors handling
+5. [ ] Snapshots:
    - [ ] detected by the SQL files pattern *-snapshot.sql.
    - [ ] support backup & restore binary snapshots.
-5. [ ] DatabaseFixture.Testing extension to re-create the whole database from scratch.
-6. [ ] Different adtabase providers:
+6. [ ] DatabaseFixture.Testing extension to re-create the whole database from scratch.
+7. [ ] Different adtabase providers:
    - [x] Microsoft SQL Server
    - [ ] MySQL
    - [ ] PostgreSQL
-7. [ ] Automation testing with Docker
-8. [ ] Marketing (logo, docs, website, etc.)
-9.  [ ] Nuget
-10. [ ] Make it an open-source project
-11. [ ] Start some extensions:
+8. [ ] Automation testing with Docker
+9. [ ] Marketing (logo, docs, website, etc.)
+10.  [ ] Nuget
+11. [ ] Make it an open-source project
+12. [ ] Start some extensions:
     - [ ] Nuke.Build
     - [ ] xUnit, NUnit, and more fixtures
     - [ ] Testing: create database once, and the backup and restore it before every unit test
