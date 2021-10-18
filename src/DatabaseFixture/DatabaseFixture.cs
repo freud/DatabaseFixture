@@ -3,6 +3,7 @@ using DatabaseFixture.DatabaseSource;
 using DatabaseFixture.SqlExecution;
 using DatabaseFixture.SqlExecution.PredefinedSql;
 using DatabaseFixture.Versioning;
+using DatabaseFixture.Versioning.Factories;
 using Microsoft.Data.SqlClient;
 
 namespace DatabaseFixture
@@ -41,8 +42,9 @@ namespace DatabaseFixture
 
         public static DatabaseFixture Create(string sqlFilesDirectory, string connectionString)
         {
+            var versionFactory = new SemVersionFromFileFromFileFactory();
             var connection = new SqlConnection(connectionString);
-            var directory = new SqlFilesDirectory(sqlFilesDirectory);
+            var directory = new SqlFilesDirectory(sqlFilesDirectory, versionFactory);
             var applier = new SqlContentApplier(new NonQueryRunner(connection), connection, new SqlContentAppliedInDatabaseChecker(connection));
             return new(directory, applier, connection);
         }
