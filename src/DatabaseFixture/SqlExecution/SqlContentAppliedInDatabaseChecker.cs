@@ -15,13 +15,13 @@ namespace DatabaseFixture.SqlExecution
             _connectionString = Guard.Against.NullOrWhiteSpace(connectionString, nameof(connectionString));
         }
 
-        public bool CheckIfAlreadyApplied(SqlContent content)
+        public bool CheckIfAlreadyApplied(VersionedSqlContent content)
         {
             return _connectionString.Execute(connection =>
             {
                 var results = connection.Query(
-                    @"SELECT * FROM [dbo].[DatabaseVersion] WHERE [AppliedSqlContent] = @AppliedSqlContent",
-                    new { AppliedSqlContent = content.RawSql }
+                    @"SELECT * FROM [dbo].[DatabaseVersion] WHERE [Version] = @Version",
+                    new { Version = content.Version.ToString() }
                 ).ToList();
 
                 if (results.Count > 1)

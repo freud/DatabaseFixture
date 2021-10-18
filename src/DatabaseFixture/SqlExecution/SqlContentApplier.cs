@@ -29,26 +29,28 @@ namespace DatabaseFixture.SqlExecution
                 return;
             }
 
-            if (_checker.CheckIfAlreadyApplied(content))
+            if (content is not VersionedSqlContent versionedSqlContent)
+            {
+                throw new NotSupportedException();
+            }
+
+            if (_checker.CheckIfAlreadyApplied(versionedSqlContent))
             {
                 return;
             }
 
             _runner.Execute(content);
 
-            if (content is VersionedSqlContent versionedSqlContent)
-            {
-                _connectionString.Execute(connection => connection.Execute(
-                    $"INSERT INTO [dbo].[DatabaseVersion]([Version], [AppliedAt], [AppliedSqlContent]) " +
-                    $"VALUES(@Version, @UtcNow, @RawSql)",
-                    new
-                    {
-                        Version = versionedSqlContent.Version.ToString(),
-                        RawSql = content.ToString(),
-                        UtcNow = DateTime.UtcNow
-                    })
-                );
-            }
+            _connectionString.Execute(connection => connection.Execute(
+                $"INSERT INTO [dbo].[DatabaseVersion]([Version], [AppliedAt], [AppliedSqlContent]) " +
+                $"VALUES(@Version, @UtcNow, @RawSql)",
+                new
+                {
+                    Version = versionedSqlContent.Version.ToString(),
+                    RawSql = content.ToString(),
+                    UtcNow = DateTime.UtcNow
+                })
+            );
         }
     }
 }
