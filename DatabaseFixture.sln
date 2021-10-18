@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseFixture", "src\DatabaseFixture\DatabaseFixture.csproj", "{ED6591E5-6004-483D-9D96-2458CFAB9FE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseFixture.Tests", "src\DatabaseFixture.Tests\DatabaseFixture.Tests.csproj", "{47D8D45B-63E5-4B8F-B789-45CD1E69FA3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{ED6591E5-6004-483D-9D96-2458CFAB9FE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED6591E5-6004-483D-9D96-2458CFAB9FE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED6591E5-6004-483D-9D96-2458CFAB9FE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47D8D45B-63E5-4B8F-B789-45CD1E69FA3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47D8D45B-63E5-4B8F-B789-45CD1E69FA3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47D8D45B-63E5-4B8F-B789-45CD1E69FA3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47D8D45B-63E5-4B8F-B789-45CD1E69FA3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

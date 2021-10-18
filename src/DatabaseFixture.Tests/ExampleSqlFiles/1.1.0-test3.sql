@@ -1,0 +1,1 @@
+INSERT INTO [dbo].[Settings]([Key], [Value]) VALUES ('LastFetchedLogId', 0);
