@@ -46,9 +46,9 @@ namespace DatabaseFixture
                 .Create()
                 .Apply(_applier);
 
-            foreach (var sqlFile in _directory.GetAll())
+            foreach (var sqlFileContent in _directory.GetAll())
             {
-                sqlFile.Apply(_applier);
+                sqlFileContent.Apply(_applier);
             }
         }
 

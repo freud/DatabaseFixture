@@ -22,14 +22,13 @@ namespace DatabaseFixture.SqlExecution
             _checker = Guard.Against.Null(checker, nameof(checker));
         }
 
-        public void Apply(SqlContent content)
+        public void Apply(PredefinedSqlContent content)
         {
-            if (content is PredefinedSqlContent)
-            {
-                _runner.Execute(content);
-                return;
-            }
-
+            _runner.Execute(content);
+        }
+        
+        public void Apply(VersionedSqlContent content)
+        {
             if (_checker.CheckIfAlreadyApplied(content))
             {
                 return;

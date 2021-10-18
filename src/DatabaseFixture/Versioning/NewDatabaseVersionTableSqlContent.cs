@@ -18,7 +18,7 @@ namespace DatabaseFixture.Versioning
         {
         }
 
-        public static SqlContent Create()
+        public static CreateDatabaseVersionTableSqlContent Create()
         {
             return new CreateDatabaseVersionTableSqlContent();
         }

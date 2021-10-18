@@ -5,13 +5,13 @@ using DatabaseFixture.Versioning;
 
 namespace DatabaseFixture.DatabaseSource
 {
-    public class SqlFileContent : SqlContent
+    public class SqlFileContent : VersionedSqlContent
     {
         private SqlFileContent(string rawSql, IVersion version) : base(rawSql, version)
         {
         }
 
-        public static SqlContent FromFile(FileInfo file, Func<FileInfo, IVersion> versionFactory)
+        public static SqlFileContent FromFile(FileInfo file, Func<FileInfo, IVersion> versionFactory)
         {
             using var reader = file.OpenText();
             var content = reader.ReadToEnd();

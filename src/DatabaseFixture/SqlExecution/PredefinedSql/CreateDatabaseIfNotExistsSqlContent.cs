@@ -16,7 +16,7 @@
         {
         }
 
-        public static SqlContent Create(string databaseName)
+        public static CreateDatabaseIfNotExistsSqlContent Create(string databaseName)
         {
             return new CreateDatabaseIfNotExistsSqlContent(databaseName);
         }

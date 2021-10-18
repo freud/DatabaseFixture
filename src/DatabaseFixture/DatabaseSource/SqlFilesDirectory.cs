@@ -17,12 +17,12 @@ namespace DatabaseFixture.DatabaseSource
             _versionFactory = Guard.Against.Null(versionFactory, nameof(versionFactory));
         }
 
-        public IEnumerable<SqlFile> GetAll()
+        public IEnumerable<SqlFileContent> GetAll()
         {
             return Directory
                 .GetFiles(_path, "*.sql", SearchOption.TopDirectoryOnly)
                 .Select(file => new FileInfo(file))
-                .Select(file => new SqlFile(file, _versionFactory));
+                .Select(file => SqlFileContent.FromFile(file, fileInfo => _versionFactory.Create(fileInfo)));
         }
     }
 }
