@@ -1,4 +1,5 @@
-﻿using Ardalis.GuardClauses;
+﻿using System;
+using Ardalis.GuardClauses;
 using Microsoft.Data.SqlClient;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
@@ -7,21 +8,17 @@ namespace DatabaseFixture.SqlExecution
 {
     public class NonQueryRunner
     {
-        private readonly string _sqlConnectionString;
+        private readonly SqlConnection _connection;
 
-        public NonQueryRunner(string sqlConnectionString)
+        public NonQueryRunner(SqlConnection connection)
         {
-            _sqlConnectionString = Guard.Against.NullOrWhiteSpace(sqlConnectionString, nameof(sqlConnectionString));
+            _connection = Guard.Against.Null(connection, nameof(connection));
         }
 
         public void Execute(SqlContent content)
         {
-            using (var connection = new SqlConnection(_sqlConnectionString))
-            {
-                connection.Open();
-                var server = new Server(new ServerConnection(connection));
-                server.ConnectionContext.ExecuteNonQuery(content.RawSql);   
-            }
+            var server = new Server(new ServerConnection(_connection));
+            server.ConnectionContext.ExecuteNonQuery(content.RawSql);
         }
     }
 }

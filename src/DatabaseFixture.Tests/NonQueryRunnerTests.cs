@@ -1,5 +1,5 @@
-﻿using System;
-using DatabaseFixture.SqlExecution;
+﻿using DatabaseFixture.SqlExecution;
+using Microsoft.Data.SqlClient;
 using Shouldly;
 using Xunit;
 
@@ -10,7 +10,7 @@ namespace DatabaseFixture.Tests
         [Fact]
         public void does_not_throw()
         {
-            var sut = new NonQueryRunner("Server=192.168.100.100; Database=master; User Id=sa; Password=sa@102.2021;");
+            var sut = new NonQueryRunner(new SqlConnection("Server=192.168.100.100; Database=master; User Id=sa; Password=sa@102.2021;"));
             Should.NotThrow(() => sut.Execute(new TestSqlContent()));
         }
 

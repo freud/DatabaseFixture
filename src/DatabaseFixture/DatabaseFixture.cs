@@ -9,26 +9,24 @@ namespace DatabaseFixture
 {
     public class DatabaseFixture
     {
-        private readonly string _connectionString;
         private readonly SqlFilesDirectory _directory;
         private readonly SqlContentApplier _applier;
-        private readonly SqlConnectionStringBuilder _connectionStringBuilder;
+        private readonly SqlConnection _connection;
 
         public DatabaseFixture(
             SqlFilesDirectory directory, 
             SqlContentApplier applier,
-            string connectionString)
+            SqlConnection connection)
         {
             _directory = Guard.Against.Null(directory, nameof(directory));
             _applier = Guard.Against.Null(applier, nameof(applier));
-            _connectionString = Guard.Against.NullOrWhiteSpace(connectionString, nameof(connectionString));
-            _connectionStringBuilder = new SqlConnectionStringBuilder(_connectionString);
+            _connection = Guard.Against.Null(connection, nameof(connection));
         }
 
         public void Execute()
         {
             CreateDatabaseIfNotExistsSqlContent
-                .Create(_connectionStringBuilder.InitialCatalog)
+                .Create(_connection.Database)
                 .Apply(_applier);
 
             CreateDatabaseVersionTableSqlContent
@@ -39,6 +37,14 @@ namespace DatabaseFixture
             {
                 sqlFile.Apply(_applier);
             }
+        }
+
+        public static DatabaseFixture Create(string sqlFilesDirectory, string connectionString)
+        {
+            var connection = new SqlConnection(connectionString);
+            var directory = new SqlFilesDirectory(sqlFilesDirectory);
+            var applier = new SqlContentApplier(new NonQueryRunner(connection), connection, new SqlContentAppliedInDatabaseChecker(connection));
+            return new(directory, applier, connection);
         }
     }
 }

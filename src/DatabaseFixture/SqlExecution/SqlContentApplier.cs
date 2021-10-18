@@ -2,6 +2,7 @@
 using System.Data.Common;
 using Ardalis.GuardClauses;
 using Dapper;
+using Microsoft.Data.SqlClient;
 
 namespace DatabaseFixture.SqlExecution
 {
@@ -13,7 +14,7 @@ namespace DatabaseFixture.SqlExecution
 
         public SqlContentApplier(
             NonQueryRunner runner,
-            DbConnection connection,
+            SqlConnection connection,
             SqlContentAppliedInDatabaseChecker checker)
         {
             _runner = Guard.Against.Null(runner, nameof(runner));
