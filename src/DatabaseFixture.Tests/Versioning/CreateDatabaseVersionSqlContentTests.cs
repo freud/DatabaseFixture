@@ -44,8 +44,7 @@ namespace DatabaseFixture.Tests.Versioning
         public CreateDatabaseVersionSqlContentTests()
         {
             var connectionString = "Server=192.168.100.100; Database=master; User Id=sa; Password=sa@102.2021;";
-            var connection = new Microsoft.Data.SqlClient.SqlConnection(connectionString);
-            _runner = new NonQueryRunner(connection);
+            _runner = new NonQueryRunner(connectionString);
             _connection = new SqlConnection(connectionString);
         }
     }

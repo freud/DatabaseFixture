@@ -13,34 +13,37 @@ namespace DatabaseFixture
     {
         private readonly SqlFilesDirectory _directory;
         private readonly SqlContentApplier _applier;
-        private readonly SqlConnection _connection;
+        private readonly string _connectionString;
 
         public DatabaseFixture(
             SqlFilesDirectory directory, 
             SqlContentApplier applier,
-            SqlConnection connection)
+            string connectionString)
         {
             _directory = Guard.Against.Null(directory, nameof(directory));
             _applier = Guard.Against.Null(applier, nameof(applier));
-            _connection = Guard.Against.Null(connection, nameof(connection));
+            _connectionString = Guard.Against.NullOrWhiteSpace(connectionString, nameof(connectionString));
         }
 
         public void Execute()
         {
-            var sqlToApply = new List<SqlContent>();
-            sqlToApply.Add(CreateDatabaseIfNotExistsSqlContent.Create(_connection.Database));
-            sqlToApply.Add(CreateDatabaseVersionTableSqlContent.Create());
-            sqlToApply.AddRange(_directory.GetAll());
-            sqlToApply.ForEach(sql => sql.Apply(_applier));
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var sqlToApply = new List<SqlContent>();
+                sqlToApply.Add(CreateDatabaseIfNotExistsSqlContent.Create(connection.Database));
+                sqlToApply.Add(CreateDatabaseVersionTableSqlContent.Create());
+                sqlToApply.AddRange(_directory.GetAll());
+                sqlToApply.ForEach(sql => sql.Apply(_applier));
+            }
         }
 
         public static DatabaseFixture Create(string sqlFilesDirectory, string connectionString)
         {
             var versionFactory = new SemVersionFromFileFromFileFactory();
-            var connection = new SqlConnection(connectionString);
             var directory = new SqlFilesDirectory(sqlFilesDirectory, versionFactory);
-            var applier = new SqlContentApplier(new NonQueryRunner(connection), connection, new SqlContentAppliedInDatabaseChecker(connection));
-            return new(directory, applier, connection);
+            var applier = new SqlContentApplier(new NonQueryRunner(connectionString), connectionString, new SqlContentAppliedInDatabaseChecker(connectionString));
+            return new(directory, applier, connectionString);
         }
     }
 }

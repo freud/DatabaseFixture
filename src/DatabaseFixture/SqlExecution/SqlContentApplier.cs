@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Data.Common;
-using Ardalis.GuardClauses;
 using Dapper;
+using Ardalis.GuardClauses;
 using Microsoft.Data.SqlClient;
 
 namespace DatabaseFixture.SqlExecution
@@ -9,20 +8,29 @@ namespace DatabaseFixture.SqlExecution
     public class SqlContentApplier
     {
         private readonly NonQueryRunner _runner;
-        private readonly DbConnection _connection;
+        private readonly string _connectionString;
         private readonly SqlContentAppliedInDatabaseChecker _checker;
 
         public SqlContentApplier(
             NonQueryRunner runner,
-            SqlConnection connection,
+            string connectionString,
             SqlContentAppliedInDatabaseChecker checker)
         {
             _runner = Guard.Against.Null(runner, nameof(runner));
-            _connection = Guard.Against.Null(connection, nameof(connection));
+            _connectionString = Guard.Against.NullOrWhiteSpace(connectionString, nameof(connectionString));
             _checker = Guard.Against.Null(checker, nameof(checker));
         }
 
         public void Apply(SqlContent content)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                ApplyContent(connection, content);
+            }
+        }
+        
+        private void ApplyContent(SqlConnection connection, SqlContent content)
         {
             if (content is PredefinedSqlContent)
             {
@@ -39,7 +47,7 @@ namespace DatabaseFixture.SqlExecution
 
             if (content is VersionedSqlContent versionedSqlContent)
             {
-                _connection.Execute(
+                connection.Execute(
                     $"INSERT INTO [dbo].[DatabaseVersion]([Version], [AppliedAt], [AppliedSqlContent]) " +
                     $"VALUES(@Version, @UtcNow, @RawSql)",
                     new
