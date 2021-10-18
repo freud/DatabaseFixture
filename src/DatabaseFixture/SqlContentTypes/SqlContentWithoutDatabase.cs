@@ -1,4 +1,4 @@
-namespace DatabaseFixture.SqlExecution.PredefinedSql
+namespace DatabaseFixture.SqlContentTypes
 {
     public abstract class SqlContentWithoutDatabase : PredefinedSqlContent
     {

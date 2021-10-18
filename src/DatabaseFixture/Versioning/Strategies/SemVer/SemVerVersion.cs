@@ -1,6 +1,6 @@
 using Ardalis.GuardClauses;
 
-namespace DatabaseFixture.Versioning
+namespace DatabaseFixture.Versioning.Strategies.SemVer
 {
     public class SemVerVersion : VersionStrategy<SemVerVersion>, IVersion
     {

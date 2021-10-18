@@ -1,4 +1,6 @@
-﻿namespace DatabaseFixture.SqlExecution.PredefinedSql
+﻿using DatabaseFixture.SqlContentTypes;
+
+namespace DatabaseFixture.SqlExecution
 {
     public class CreateDatabaseIfNotExistsSqlContent : SqlContentWithoutDatabase
     {

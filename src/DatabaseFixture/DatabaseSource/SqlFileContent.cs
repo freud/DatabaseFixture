@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using DatabaseFixture.SqlContentTypes;
 using DatabaseFixture.SqlExecution;
 using DatabaseFixture.Versioning;
+using DatabaseFixture.Versioning.Strategies;
 
 namespace DatabaseFixture.DatabaseSource
 {

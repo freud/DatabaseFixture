@@ -1,7 +1,7 @@
 ﻿using System;
 using Ardalis.GuardClauses;
 
-namespace DatabaseFixture.Versioning
+namespace DatabaseFixture.Versioning.Strategies
 {
     public abstract class VersionStrategy<TSpecificVersion> : 
         IComparable<TSpecificVersion> where TSpecificVersion : VersionStrategy<TSpecificVersion>,

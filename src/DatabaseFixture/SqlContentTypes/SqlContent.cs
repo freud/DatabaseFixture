@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
+using DatabaseFixture.SqlExecution;
 
-namespace DatabaseFixture.SqlExecution
+namespace DatabaseFixture.SqlContentTypes
 {
     public abstract class SqlContent
     {

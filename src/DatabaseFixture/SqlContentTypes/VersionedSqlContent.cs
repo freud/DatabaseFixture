@@ -1,7 +1,8 @@
 using Ardalis.GuardClauses;
 using DatabaseFixture.Versioning;
+using DatabaseFixture.Versioning.Strategies;
 
-namespace DatabaseFixture.SqlExecution
+namespace DatabaseFixture.SqlContentTypes
 {
     public abstract class VersionedSqlContent : SqlContent
     {

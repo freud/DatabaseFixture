@@ -1,6 +1,6 @@
-using DatabaseFixture.SqlExecution;
+using DatabaseFixture.SqlContentTypes;
 
-namespace DatabaseFixture.Versioning
+namespace DatabaseFixture.Versioning.Initialization
 {
     public class CreateDatabaseVersionTableSqlContent : PredefinedSqlContent
     {

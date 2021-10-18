@@ -1,4 +1,4 @@
-namespace DatabaseFixture.SqlExecution
+namespace DatabaseFixture.SqlContentTypes
 {
     public abstract class PredefinedSqlContent : SqlContent
     {

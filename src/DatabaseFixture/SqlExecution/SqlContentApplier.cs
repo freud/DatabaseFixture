@@ -1,6 +1,7 @@
 ﻿using System;
 using Dapper;
 using Ardalis.GuardClauses;
+using DatabaseFixture.SqlContentTypes;
 using DatabaseFixture.SqlExtensions;
 
 namespace DatabaseFixture.SqlExecution

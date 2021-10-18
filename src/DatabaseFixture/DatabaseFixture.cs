@@ -1,9 +1,9 @@
 ﻿using Ardalis.GuardClauses;
 using DatabaseFixture.DatabaseSource;
 using DatabaseFixture.SqlExecution;
-using DatabaseFixture.SqlExecution.PredefinedSql;
 using DatabaseFixture.Versioning;
-using DatabaseFixture.Versioning.Factories;
+using DatabaseFixture.Versioning.Initialization;
+using DatabaseFixture.Versioning.Strategies.SemVer;
 using Microsoft.Data.SqlClient;
 
 namespace DatabaseFixture

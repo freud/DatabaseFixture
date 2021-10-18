@@ -2,6 +2,7 @@
 using Dapper;
 using DatabaseFixture.SqlExecution;
 using DatabaseFixture.Versioning;
+using DatabaseFixture.Versioning.Initialization;
 using Shouldly;
 using Xunit;
 

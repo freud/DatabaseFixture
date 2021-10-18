@@ -1,5 +1,5 @@
 ﻿using Ardalis.GuardClauses;
-using DatabaseFixture.SqlExecution.PredefinedSql;
+using DatabaseFixture.SqlContentTypes;
 using DatabaseFixture.SqlExtensions;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;

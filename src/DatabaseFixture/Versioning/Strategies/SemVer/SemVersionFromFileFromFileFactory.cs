@@ -3,7 +3,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Ardalis.GuardClauses;
 
-namespace DatabaseFixture.Versioning.Factories
+namespace DatabaseFixture.Versioning.Strategies.SemVer
 {
     public class SemVersionFromFileFromFileFactory : IVersionFromFileFactory
     {

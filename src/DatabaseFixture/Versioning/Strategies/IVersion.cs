@@ -1,6 +1,6 @@
 using System;
 
-namespace DatabaseFixture.Versioning
+namespace DatabaseFixture.Versioning.Strategies
 {
     public interface IVersion : IComparable
     {

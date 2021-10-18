@@ -1,4 +1,5 @@
-﻿using DatabaseFixture.SqlExecution;
+﻿using DatabaseFixture.SqlContentTypes;
+using DatabaseFixture.SqlExecution;
 using Shouldly;
 using Xunit;
 

@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace DatabaseFixture.Versioning.Factories
+namespace DatabaseFixture.Versioning.Strategies
 {
     public interface IVersionFromFileFactory
     {

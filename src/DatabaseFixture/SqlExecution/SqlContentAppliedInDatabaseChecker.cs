@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Ardalis.GuardClauses;
 using Dapper;
+using DatabaseFixture.SqlContentTypes;
 using DatabaseFixture.SqlExtensions;
 
 namespace DatabaseFixture.SqlExecution

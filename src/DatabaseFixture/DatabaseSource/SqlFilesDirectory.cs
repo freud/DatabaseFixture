@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using Ardalis.GuardClauses;
-using DatabaseFixture.Versioning.Factories;
+using DatabaseFixture.Versioning.Strategies;
 
 namespace DatabaseFixture.DatabaseSource
 {
