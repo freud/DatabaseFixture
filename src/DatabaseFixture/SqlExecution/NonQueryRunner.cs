@@ -15,26 +15,24 @@ namespace DatabaseFixture.SqlExecution
             _connectionString = Guard.Against.Null(connectionString, nameof(connectionString));
         }
 
+        public void Execute(SqlContentWithoutDatabase content)
+        {
+            _connectionString.ExecuteWithDatabase("master", connection =>
+            {
+                var serverConnection = new ServerConnection(connection);
+                var server = new Server(serverConnection);
+                server.ConnectionContext.ExecuteNonQuery(content.RawSql);
+            });
+        }
+
         public void Execute(SqlContent content)
         {
-            if (content is SqlContentWithoutDatabase)
+            _connectionString.Execute(connection =>
             {
-                _connectionString.ExecuteWithDatabase("master", connection =>
-                {
-                    var serverConnection = new ServerConnection(connection);
-                    var server = new Server(serverConnection);
-                    server.ConnectionContext.ExecuteNonQuery(content.RawSql);
-                });
-            }
-            else
-            {
-                _connectionString.Execute(connection =>
-                {
-                    var serverConnection = new ServerConnection(connection);
-                    var server = new Server(serverConnection);
-                    server.ConnectionContext.ExecuteNonQuery(content.RawSql);
-                });
-            }
+                var serverConnection = new ServerConnection(connection);
+                var server = new Server(serverConnection);
+                server.ConnectionContext.ExecuteNonQuery(content.RawSql);
+            });
         }
     }
 }

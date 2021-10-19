@@ -24,9 +24,15 @@ namespace DatabaseFixture.SqlExecution
 
         public void Apply(SqlContent content)
         {
-            if (content is PredefinedSqlContent)
+            if (content is SqlContentWithoutDatabase sqlContentWithoutDatabase)
             {
-                _runner.Execute(content);
+                _runner.Execute(sqlContentWithoutDatabase);
+                return;
+            }
+
+            if (content is PredefinedSqlContent predefinedSqlContent)
+            {
+                _runner.Execute(predefinedSqlContent);
                 return;
             }
 
@@ -40,7 +46,7 @@ namespace DatabaseFixture.SqlExecution
                 return;
             }
 
-            _runner.Execute(content);
+            _runner.Execute(versionedSqlContent);
 
             _connectionString.Execute(connection => connection.Execute(
                 $"INSERT INTO [dbo].[DatabaseVersion]([Version], [AppliedAt], [AppliedSqlContent]) " +
