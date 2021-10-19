@@ -1,5 +1,5 @@
 using Ardalis.GuardClauses;
-using DatabaseFixture.Versioning;
+using DatabaseFixture.SqlExecution;
 using DatabaseFixture.Versioning.Strategies;
 
 namespace DatabaseFixture.SqlContentTypes
@@ -11,6 +11,11 @@ namespace DatabaseFixture.SqlContentTypes
         protected VersionedSqlContent(string rawSql, IVersion version) : base(rawSql)
         {
             Version = Guard.Against.Null(version, nameof(version));
+        }
+
+        public override void Apply(SqlContentApplier applier)
+        {
+            applier.Apply(this);
         }
     }
 }

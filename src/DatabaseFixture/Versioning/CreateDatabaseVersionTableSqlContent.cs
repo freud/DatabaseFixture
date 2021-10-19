@@ -1,4 +1,5 @@
 using DatabaseFixture.SqlContentTypes;
+using DatabaseFixture.SqlExecution;
 
 namespace DatabaseFixture.Versioning.Initialization
 {
@@ -21,6 +22,11 @@ namespace DatabaseFixture.Versioning.Initialization
         public static CreateDatabaseVersionTableSqlContent Create()
         {
             return new CreateDatabaseVersionTableSqlContent();
+        }
+
+        public override void Apply(SqlContentApplier applier)
+        {
+            applier.Apply(this);
         }
     }
 }

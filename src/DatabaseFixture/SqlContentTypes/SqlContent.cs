@@ -19,9 +19,6 @@ namespace DatabaseFixture.SqlContentTypes
             return content.RawSql;
         }
 
-        public void Apply(SqlContentApplier applier)
-        {
-            applier.Apply(this);
-        }
+        public abstract void Apply(SqlContentApplier applier);
     }
 }

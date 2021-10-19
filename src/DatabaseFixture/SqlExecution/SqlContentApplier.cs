@@ -22,38 +22,31 @@ namespace DatabaseFixture.SqlExecution
             _checker = Guard.Against.Null(checker, nameof(checker));
         }
 
-        public void Apply(SqlContent content)
+        public void Apply(SqlContentWithoutDatabase content)
         {
-            if (content is SqlContentWithoutDatabase sqlContentWithoutDatabase)
-            {
-                _runner.Execute(sqlContentWithoutDatabase);
-                return;
-            }
+            _runner.Execute(content);
+        }
 
-            if (content is PredefinedSqlContent predefinedSqlContent)
-            {
-                _runner.Execute(predefinedSqlContent);
-                return;
-            }
+        public void Apply(PredefinedSqlContent content)
+        {
+            _runner.Execute(content);
+        }
 
-            if (content is not VersionedSqlContent versionedSqlContent)
-            {
-                throw new NotSupportedException();
-            }
-
-            if (_checker.CheckIfAlreadyApplied(versionedSqlContent))
+        public void Apply(VersionedSqlContent content)
+        {
+            if (_checker.CheckIfAlreadyApplied(content))
             {
                 return;
             }
 
-            _runner.Execute(versionedSqlContent);
+            _runner.Execute(content);
 
             _connectionString.Execute(connection => connection.Execute(
                 $"INSERT INTO [dbo].[DatabaseVersion]([Version], [AppliedAt], [AppliedSqlContent]) " +
                 $"VALUES(@Version, @UtcNow, @RawSql)",
                 new
                 {
-                    Version = versionedSqlContent.Version.ToString(),
+                    Version = content.Version.ToString(),
                     RawSql = content.ToString(),
                     UtcNow = DateTime.UtcNow
                 })
