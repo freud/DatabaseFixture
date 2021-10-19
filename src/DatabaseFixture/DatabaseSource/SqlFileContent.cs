@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Ardalis.GuardClauses;
 using DatabaseFixture.DatabaseSource.Validation;
@@ -14,7 +13,7 @@ namespace DatabaseFixture.DatabaseSource
         }
 
         public static SqlFileContent FromFile(FileInfo file, 
-            Func<FileInfo, IVersion> versionFactory,
+            IVersionFactory versionFactory,
             SourceConsistencyValidator validator)
         {
             Guard.Against.Null(file, nameof(file));
@@ -23,7 +22,7 @@ namespace DatabaseFixture.DatabaseSource
             
             using var reader = file.OpenText();
             var content = reader.ReadToEnd();
-            var version = versionFactory(file);
+            var version = versionFactory.Create(file);
             validator.ThrowIfNotValid(version);
             return new SqlFileContent(content, version);
         }

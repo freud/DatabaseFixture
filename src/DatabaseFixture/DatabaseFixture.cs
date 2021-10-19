@@ -1,4 +1,6 @@
-﻿using Ardalis.GuardClauses;
+﻿using System;
+using System.IO;
+using Ardalis.GuardClauses;
 using DatabaseFixture.DatabaseSource;
 using DatabaseFixture.DatabaseSource.Validation;
 using DatabaseFixture.SqlExecution;
@@ -39,7 +41,8 @@ namespace DatabaseFixture
         {
             var versionFactory = versionStrategy ?? new SemVerFactory();
             var validator = new SourceConsistencyValidator(new AllVersionsSource(connectionString, versionStrategy));
-            var directory = new SqlFilesDirectory(sqlFilesDirectory, versionFactory, validator);
+            var contentFactory = new Func<FileInfo, SqlFileContent>(sqlFile => SqlFileContent.FromFile(sqlFile, versionFactory, validator));
+            var directory = new SqlFilesDirectory(sqlFilesDirectory, contentFactory, validator);
             var applier = new SqlContentApplier(new NonQueryRunner(connectionString), connectionString, new SqlContentAppliedInDatabaseChecker(connectionString));
             return new DatabaseFixture(directory, applier, connectionString);
         }
