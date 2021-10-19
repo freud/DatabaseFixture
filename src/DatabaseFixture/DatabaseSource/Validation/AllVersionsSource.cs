@@ -5,7 +5,7 @@ using Dapper;
 using DatabaseFixture.SqlExtensions;
 using DatabaseFixture.Versioning.Strategies;
 
-namespace DatabaseFixture.SqlExecution.Validation
+namespace DatabaseFixture.DatabaseSource.Validation
 {
     public class AllVersionsSource
     {

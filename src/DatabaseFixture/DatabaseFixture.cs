@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using DatabaseFixture.DatabaseSource;
+using DatabaseFixture.DatabaseSource.Validation;
 using DatabaseFixture.SqlExecution;
-using DatabaseFixture.SqlExecution.Validation;
 using DatabaseFixture.Versioning.Initialization;
 using DatabaseFixture.Versioning.Strategies;
 using DatabaseFixture.Versioning.Strategies.SemVer;

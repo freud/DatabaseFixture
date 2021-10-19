@@ -1,6 +1,5 @@
 using Ardalis.GuardClauses;
 using DatabaseFixture.SqlExecution;
-using DatabaseFixture.SqlExecution.Validation;
 using DatabaseFixture.Versioning.Strategies;
 
 namespace DatabaseFixture.SqlContentTypes

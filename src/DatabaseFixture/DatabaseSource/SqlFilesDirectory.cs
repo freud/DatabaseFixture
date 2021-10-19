@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using Ardalis.GuardClauses;
-using DatabaseFixture.SqlExecution.Validation;
+using DatabaseFixture.DatabaseSource.Validation;
 using DatabaseFixture.Versioning.Strategies;
 
 namespace DatabaseFixture.DatabaseSource
