@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using DatabaseFixture.DatabaseSource;
 using DatabaseFixture.SqlExecution;
-using DatabaseFixture.Versioning;
+using DatabaseFixture.SqlExecution.Validation;
 using DatabaseFixture.Versioning.Initialization;
 using DatabaseFixture.Versioning.Strategies;
 using DatabaseFixture.Versioning.Strategies.SemVer;
@@ -35,10 +35,11 @@ namespace DatabaseFixture
             }
         }
 
-        public static DatabaseFixture Create(string sqlFilesDirectory, string connectionString, IVersionFromFileFactory? versionStrategy = null)
+        public static DatabaseFixture Create(string sqlFilesDirectory, string connectionString, IVersionFactory? versionStrategy = null)
         {
-            var versionFactory = versionStrategy ?? new SemVerFromFileFactory();
-            var directory = new SqlFilesDirectory(sqlFilesDirectory, versionFactory);
+            var versionFactory = versionStrategy ?? new SemVerFactory();
+            var validator = new SourceConsistencyValidator(new AllVersionsSource(connectionString, versionStrategy));
+            var directory = new SqlFilesDirectory(sqlFilesDirectory, versionFactory, validator);
             var applier = new SqlContentApplier(new NonQueryRunner(connectionString), connectionString, new SqlContentAppliedInDatabaseChecker(connectionString));
             return new DatabaseFixture(directory, applier, connectionString);
         }

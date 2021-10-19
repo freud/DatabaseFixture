@@ -2,8 +2,9 @@ using System.IO;
 
 namespace DatabaseFixture.Versioning.Strategies
 {
-    public interface IVersionFromFileFactory
+    public interface IVersionFactory
     {
         public IVersion Create(FileInfo fileInfo);
+        public IVersion Create(string versionDisplayName);
     }
 }

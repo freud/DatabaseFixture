@@ -17,7 +17,7 @@ namespace DatabaseFixture.Tests
         {
             var directory = "ExampleSqlFilesWithSemVer";
             var connectionString = "Server=192.168.100.100; Database=DatabaseFixture_ExampleSqlFilesWithSemVer; User Id=sa; Password=sa@102.2021;";
-            var versionStrategy = new SemVerFromFileFactory();
+            var versionStrategy = new SemVerFactory();
             DatabaseFixture.Create(directory, connectionString, versionStrategy).Execute();
 
             var savedVersions = connectionString
@@ -35,7 +35,7 @@ namespace DatabaseFixture.Tests
         {
             var directory = "ExampleSqlFilesWithIncrementalVersion";
             var connectionString = "Server=192.168.100.100; Database=DatabaseFixture_ExampleSqlFilesWithIncrementalVersion; User Id=sa; Password=sa@102.2021;";
-            var versionStrategy = new IncrementalVersionFromFileFactory();
+            var versionStrategy = new IncrementalVersionFactory();
             DatabaseFixture.Create(directory, connectionString, versionStrategy).Execute();
 
             var savedVersions = connectionString

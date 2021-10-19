@@ -5,7 +5,7 @@ using Ardalis.GuardClauses;
 
 namespace DatabaseFixture.Versioning.Strategies.SemVer
 {
-    public class SemVerFromFileFactory : IVersionFromFileFactory
+    public class SemVerFactory : IVersionFactory
     {
         public IVersion Create(FileInfo file)
         {
@@ -20,15 +20,25 @@ namespace DatabaseFixture.Versioning.Strategies.SemVer
             );
         }
 
-        private static dynamic Parse(string filename)
+        public IVersion Create(string versionDisplayName)
         {
-            var matches = Regex.Match(filename, 
+            var versionParts = Parse(versionDisplayName);
+            return new SemVerVersion(
+                versionParts.Major,
+                versionParts.Minor, 
+                versionParts.Patch
+            );
+        }
+
+        private static dynamic Parse(string versionText)
+        {
+            var matches = Regex.Match(versionText, 
                 @"^(?<Major>[0-9]+)\.(?<Minor>[0-9]+)\.(?<Patch>[0-9]+).*", 
                 RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
             if (matches.Success == false)
             {
-                throw new NotSupportedException(@$"Filename ""{filename}"" is not supported with {nameof(SemVerVersion)} versioning strategy");
+                throw new NotSupportedException(@$"Filename ""{versionText}"" is not supported with {nameof(SemVerVersion)} versioning strategy");
             }
 
             var major = int.Parse(matches.Groups["Major"].Value);

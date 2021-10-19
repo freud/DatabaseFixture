@@ -6,14 +6,14 @@ No ORM libraries and complex behavior.
 
 ## ToDo
 
-1. [ ] Database versioning
+1. [x] Database versioning
    - [x] DatabaseVersion table (auto-creation if not exists).
    - [x] Default versioning strategy: semantic (MAJOR.MINOR.PATCH) kept in sql file names prefix.
    - [x] Custom versioning providers.
      - [x] SemVer
      - [x] Incremental
    - [x] The guard for files, that don't contain the correct version pattern.
-   - [ ] The guard for files, that are not applied and contain versions older than the latest one. Detect any SQL files added accidentally.
+   - [x] The guard for files, that are not applied and contain versions older than the latest one. Detect any SQL files added accidentally.
    - [x] Order SQL files by the version.
 2. [ ] Create a database automatically:
    - [ ] By default without auto-creation

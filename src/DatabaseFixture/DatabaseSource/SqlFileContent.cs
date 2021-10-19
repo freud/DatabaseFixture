@@ -1,8 +1,8 @@
 using System;
 using System.IO;
+using Ardalis.GuardClauses;
 using DatabaseFixture.SqlContentTypes;
-using DatabaseFixture.SqlExecution;
-using DatabaseFixture.Versioning;
+using DatabaseFixture.SqlExecution.Validation;
 using DatabaseFixture.Versioning.Strategies;
 
 namespace DatabaseFixture.DatabaseSource
@@ -13,11 +13,19 @@ namespace DatabaseFixture.DatabaseSource
         {
         }
 
-        public static SqlFileContent FromFile(FileInfo file, Func<FileInfo, IVersion> versionFactory)
+        public static SqlFileContent FromFile(FileInfo file, 
+            Func<FileInfo, IVersion> versionFactory,
+            SourceConsistencyValidator validator)
         {
+            Guard.Against.Null(file, nameof(file));
+            Guard.Against.Null(versionFactory, nameof(versionFactory));
+            Guard.Against.Null(validator, nameof(validator));
+            
             using var reader = file.OpenText();
             var content = reader.ReadToEnd();
-            return new SqlFileContent(content, versionFactory(file));
+            var version = versionFactory(file);
+            validator.ThrowIfNotValid(version);
+            return new SqlFileContent(content, version);
         }
     }
 }
