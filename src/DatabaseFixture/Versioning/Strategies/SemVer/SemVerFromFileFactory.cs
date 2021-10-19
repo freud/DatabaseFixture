@@ -5,7 +5,7 @@ using Ardalis.GuardClauses;
 
 namespace DatabaseFixture.Versioning.Strategies.SemVer
 {
-    public class SemVersionFromFileFromFileFactory : IVersionFromFileFactory
+    public class SemVerFromFileFactory : IVersionFromFileFactory
     {
         public IVersion Create(FileInfo file)
         {
@@ -28,7 +28,7 @@ namespace DatabaseFixture.Versioning.Strategies.SemVer
 
             if (matches.Success == false)
             {
-                throw new NotSupportedException(@$"Filename ""{filename}"" is not supported with SemVer versioning strategy");
+                throw new NotSupportedException(@$"Filename ""{filename}"" is not supported with {nameof(SemVerVersion)} versioning strategy");
             }
 
             var major = int.Parse(matches.Groups["Major"].Value);

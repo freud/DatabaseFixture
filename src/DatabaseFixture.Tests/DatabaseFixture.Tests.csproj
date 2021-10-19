@@ -26,6 +26,24 @@
       <None Update="ExampleSqlFiles\1.1.0-test3.sql">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="ExampleSqlFilesWithIncrementalVersion\1-test1.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="ExampleSqlFilesWithIncrementalVersion\2-test2.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="ExampleSqlFilesWithIncrementalVersion\3-test3.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="ExampleSqlFilesWithSemVer\1.0.0-test1.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="ExampleSqlFilesWithSemVer\1.0.1-test2.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="ExampleSqlFilesWithSemVer\1.1.0-test3.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ using DatabaseFixture.DatabaseSource;
 using DatabaseFixture.SqlExecution;
 using DatabaseFixture.Versioning;
 using DatabaseFixture.Versioning.Initialization;
+using DatabaseFixture.Versioning.Strategies;
 using DatabaseFixture.Versioning.Strategies.SemVer;
 using Microsoft.Data.SqlClient;
 
@@ -34,9 +35,9 @@ namespace DatabaseFixture
             }
         }
 
-        public static DatabaseFixture Create(string sqlFilesDirectory, string connectionString)
+        public static DatabaseFixture Create(string sqlFilesDirectory, string connectionString, IVersionFromFileFactory? versionStrategy = null)
         {
-            var versionFactory = new SemVersionFromFileFromFileFactory();
+            var versionFactory = versionStrategy ?? new SemVerFromFileFactory();
             var directory = new SqlFilesDirectory(sqlFilesDirectory, versionFactory);
             var applier = new SqlContentApplier(new NonQueryRunner(connectionString), connectionString, new SqlContentAppliedInDatabaseChecker(connectionString));
             return new DatabaseFixture(directory, applier, connectionString);
